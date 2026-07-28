@@ -1,9 +1,9 @@
 <?php
-// Replace these four values with the MySQL details from InfinityFree's MySQL Databases page.
-const DB_HOST = 'sql100.infinityfree.com';
-const DB_NAME = 'if0_41484287_numberbattle';
-const DB_USER = 'if0_41484287';
-const DB_PASS = 'PASTE_YOUR_VPANEL_PASSWORD_HERE';
+// Copy this file to config.php and add the credentials from the InfinityFree MySQL Databases page.
+const DB_HOST = 'sqlXXX.infinityfree.com';
+const DB_NAME = 'if0_XXXXXXXX_database';
+const DB_USER = 'if0_XXXXXXXX';
+const DB_PASS = 'YOUR_VPANEL_PASSWORD';
 
 function db(): PDO {
     static $pdo;

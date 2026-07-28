@@ -32,7 +32,7 @@ InfinityFree cannot run Node.js, Socket.IO or WebSockets. The `infinityfree` fol
 
 1. Create an InfinityFree website and a MySQL database.
 2. Open the database's phpMyAdmin and import `infinityfree/database.sql`.
-3. Edit `infinityfree/config.php` using the DB host, name, user and password shown in the InfinityFree control panel.
+3. Copy `infinityfree/config.example.php` to `infinityfree/config.php`, then add the DB host, name, user and password shown in the InfinityFree control panel. `config.php` is intentionally ignored by Git.
 4. Upload the contents of the `infinityfree` folder to the site's `htdocs` directory.
 5. Open the website URL and use two separate browsers/devices to create accounts and play.
 

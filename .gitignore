@@ -1,5 +1,6 @@
 node_modules
 .env
+infinityfree/config.php
 dist
 coverage
 uploads
