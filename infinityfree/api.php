@@ -1,4 +1,10 @@
 <?php
+if (!is_file(__DIR__.'/config.php')) {
+  http_response_code(500);
+  header('Content-Type: application/json');
+  echo json_encode(['error' => 'Server config.php is missing. Upload the filled config.php file to htdocs.']);
+  exit;
+}
 require __DIR__.'/config.php';
 $action = $_GET['action'] ?? '';
 $body = json_decode(file_get_contents('php://input'), true) ?: $_POST;
