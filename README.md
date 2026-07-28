@@ -1,19 +1,62 @@
 # Number Battle
 
-Real-time, two-player number-guessing game. Players choose a secret four-digit number (unique digits), alternate guesses, and receive exact-position and digit-only feedback.
+Number Battle is a two-player strategy game. Each player chooses four unique secret digits, takes turns guessing the opponent's code, and gets feedback for matching digits and exact positions.
 
-## Quick start
+## Features
 
-1. Copy `.env.example` to `server/.env` and set `MONGODB_URI` and a long `JWT_SECRET`.
-2. Run `npm install`.
-3. Run `npm run dev`, then open `http://localhost:5173`.
+- Signup and login
+- Create or join a private room using a six-character code
+- Server-validated secrets, guesses, turns, wins and losses
+- Live room status, guess history and chat
+- Responsive dark gaming interface
+- Two deployment versions:
+  - **Node.js + Socket.IO** for local development or a real-time hosting service
+  - **PHP + MySQL polling** for InfinityFree shared hosting
 
-The REST API is served at `/api`; Socket.IO powers room presence, game actions, chat, WebRTC signalling and reconnection. The server is authoritative: secrets stay server-side and all guesses/turns are validated there.
+## Play locally
 
-## Main endpoints
+Requirements: Node.js 24+, npm, and MongoDB running locally.
 
-`POST /api/auth/register`, `POST /api/auth/login`, `GET /api/leaderboard`, `POST /api/rooms`, `GET /api/rooms/:code`.
+```powershell
+cd "D:\Number Battle"
+Copy-Item .env.example server\.env
+npm install
+npm run dev
+```
 
-## Deployment
+Open `http://localhost:5173`. You can also double-click **Number Battle** on the desktop to start the local launcher.
 
-Set production environment variables, build the client (`npm run build`), serve `client/dist` behind HTTPS, and configure a TURN server for reliable WebRTC across restrictive networks. `docker compose up --build` starts MongoDB and the API.
+## InfinityFree deployment
+
+InfinityFree cannot run Node.js, Socket.IO or WebSockets. The `infinityfree` folder is a PHP/MySQL implementation that works on InfinityFree through a two-second browser polling interval.
+
+1. Create an InfinityFree website and a MySQL database.
+2. Open the database's phpMyAdmin and import `infinityfree/database.sql`.
+3. Edit `infinityfree/config.php` using the DB host, name, user and password shown in the InfinityFree control panel.
+4. Upload the contents of the `infinityfree` folder to the site's `htdocs` directory.
+5. Open the website URL and use two separate browsers/devices to create accounts and play.
+
+Never upload a `config.php` containing real credentials to a public GitHub repository.
+
+## Voice calling
+
+The local Node.js architecture includes WebRTC signalling hooks. The InfinityFree version does **not** currently include voice calls. A basic peer-to-peer WebRTC voice feature can be added using PHP/MySQL signalling, but reliable calls across all networks require a TURN server.
+
+## Game scoring
+
+For every guess, the game returns:
+
+- **Correct digits**: number of digits present in the secret
+- **Correct positions**: number of digits in the same index as the secret
+- **Wrong digits**: digits not present in the secret
+
+Example: secret `4831`, guess `4138` gives 4 correct digits and 2 correct positions.
+
+## Repository layout
+
+```text
+client/        React + Vite interface
+server/        Express, Socket.IO, MongoDB backend
+infinityfree/  PHP + MySQL deployment for InfinityFree
+docker-compose.yml
+```
