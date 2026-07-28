@@ -1,0 +1,16 @@
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    volumes: [mongo-data:/data/db]
+  api:
+    build: ./server
+    environment:
+      PORT: 4000
+      MONGODB_URI: mongodb://mongo:27017/number-battle
+      JWT_SECRET: change-me-in-production
+      CLIENT_URL: http://localhost:5173
+    ports: ["4000:4000"]
+    depends_on: [mongo]
+volumes:
+  mongo-data:

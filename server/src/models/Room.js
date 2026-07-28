@@ -1,0 +1,4 @@
+import mongoose from 'mongoose';
+const player = new mongoose.Schema({ user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, username: String, secret: { type: String, select: false }, ready: { type: Boolean, default: false }, connected: { type: Boolean, default: true } }, { _id: false });
+const roomSchema = new mongoose.Schema({ code: { type: String, unique: true, index: true }, host: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, status: { type: String, enum: ['waiting','playing','finished'], default: 'waiting' }, players: [player], turn: mongoose.Schema.Types.ObjectId, winner: mongoose.Schema.Types.ObjectId, guesses: [{ by: mongoose.Schema.Types.ObjectId, value: String, correctDigits: Number, correctPositions: Number, createdAt: { type: Date, default: Date.now } }] }, { timestamps: true });
+export default mongoose.model('Room', roomSchema);
